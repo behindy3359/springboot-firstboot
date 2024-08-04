@@ -3,6 +3,7 @@ package com.sesac.hello_spring.repository;
 
 import com.sesac.hello_spring.domain.Member;
 import org.apache.catalina.Store;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
@@ -10,8 +11,6 @@ public class MemoryMemberRepository implements MemberRepository {
 
     private static Map<Long, Member> store = new HashMap<>();
     private static Long sequence = 0L;
-
-
 
     @Override
     public Member save(Member member) {
@@ -27,7 +26,9 @@ public class MemoryMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findByName(String name) {
-        return  store.values().stream().filter(member -> member.getName().equals(name)).findAny();
+        return store.values().stream()
+                .filter(member -> member.getName().equals(name))
+                .findAny();
     }
 
     @Override
@@ -35,5 +36,7 @@ public class MemoryMemberRepository implements MemberRepository {
         return new ArrayList<>(store.values());
     }
 
-
+    public void clearStore(){
+        store.clear();
+    }
 }

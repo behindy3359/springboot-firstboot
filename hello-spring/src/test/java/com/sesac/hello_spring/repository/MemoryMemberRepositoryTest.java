@@ -1,7 +1,7 @@
 package com.sesac.hello_spring.repository;
 
 import com.sesac.hello_spring.domain.Member;
-//import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,12 +14,10 @@ class MemoryMemberRepositoryTest {
 
     MemoryMemberRepository repository = new MemoryMemberRepository();
 
-
     @AfterEach
-    public void afterEach(){
+    public void afterEach() {
         repository.clearStore();
     }
-
 
     @Test
     public void save(){
@@ -29,9 +27,9 @@ class MemoryMemberRepositoryTest {
         repository.save(member);
 
         Member result = repository.findById(member.getId()).get();
-//        Assertions.assertEquals(member, null);
+//        Assertions.assertEquals(member, result or null);
+//        System.out.println("result = " + (result == member));
         assertThat(member).isEqualTo(result);
-
     }
 
     @Test

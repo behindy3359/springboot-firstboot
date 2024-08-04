@@ -1,32 +1,24 @@
 package com.sesac.hello_spring.service;
 
 import com.sesac.hello_spring.domain.Member;
-import com.sesac.hello_spring.repository.MemoryMemberRepository;
-import org.assertj.core.api.Assertions;
+import com.sesac.hello_spring.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+@SpringBootTest
+@Transactional
+class MemberServiceIntegrationTest {
 
-class MemberServiceTest {
-
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
-
-    @BeforeEach
-    public void beforeEach(){
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-
-    @AfterEach
-    public void afterEach(){
-        memberRepository.clearStore();
-    }
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
 
     @Test
     void 회원가입() {
@@ -35,7 +27,7 @@ class MemberServiceTest {
         // 테스트 하는 방식을 구조화 하여 테스트코드의 가독성을 높이는 방법
         //given
          Member member = new Member();
-        member.setName("hello");
+        member.setName("스프링맨");
 
         //when
         Long saveId = memberService.join(member);
